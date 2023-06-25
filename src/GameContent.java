@@ -43,8 +43,7 @@ class GameContent extends JPanel {
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gf.dispose();
-                new GameFrame();
+                gf.renderGame();
             }
         });
         JPanel playAgainPanel = new JPanel();

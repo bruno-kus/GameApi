@@ -1,9 +1,10 @@
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GameFrame extends JFrame {
+
+    private JPanel currentScreen;
     int timeLimit = 30;
     Difficulty difficulty;
     double goal = 0.5;
@@ -24,27 +25,31 @@ public class GameFrame extends JFrame {
 
     public GameFrame() {
         super("Rectangles!");
-
-        //
-//        setLayout(new BorderLayout());
-        //
-
-        DifficultyDialog difficultyDialog = new DifficultyDialog(this);
-        difficultyDialog.setLocationRelativeTo(this);
-        difficultyDialog.setVisible(true);
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel contentPanel = new GameContent(this);
-        add(contentPanel /*, BorderLayout.CENTER*/);
 
-//        String settings = "time: " + timeLimit + "goal: " + goal + "speed: " + speed + "side: " + side + "frequency" + frequency;
-//        add(new JLabel(settings), BorderLayout.SOUTH);
+        renderMenu();
+        getContentPane().add(currentScreen);
+
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
 
+    public void renderMenu() {
+        getContentPane().removeAll();
+        currentScreen = new GameMenu(this);
+        getContentPane().add(currentScreen);
+        revalidate();
+        repaint();
+    }
+
+    public void renderGame() {
+        getContentPane().removeAll();
+        currentScreen = new GameContent(this);
+        getContentPane().add(currentScreen);
+        revalidate();
+        repaint();
     }
 }

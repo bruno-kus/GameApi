@@ -1,2 +1,28 @@
 render menu
 
+
+//        String settings = "time: " + timeLimit + "goal: " + goal + "speed: " + speed + "side: " + side + "frequency" + frequency;
+//        add(new JLabel(settings), BorderLayout.SOUTH);
+
+
+        //
+//        setLayout(new BorderLayout());
+        //
+
+
+           DifficultyDialog difficultyDialog = new DifficultyDialog(this);
+                difficultyDialog.setLocationRelativeTo(this);
+                difficultyDialog.setVisible(true);
+
+
+
+
+
+czyli przy odpaleniu otwieram menu
+
+
+contentPanel nie leży na JFrame ale gdzieś indziej -- w root pane czy coś
+
+
+nie chcę rozszerzania?
+nie dodawać do okna a do panelu
