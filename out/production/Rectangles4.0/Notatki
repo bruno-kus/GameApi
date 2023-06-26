@@ -10,7 +10,7 @@ render menu
         //
 
 
-           DifficultyDialog difficultyDialog = new DifficultyDialog(this);
+           MyPackage.DifficultyDialog difficultyDialog = new MyPackage.DifficultyDialog(this);
                 difficultyDialog.setLocationRelativeTo(this);
                 difficultyDialog.setVisible(true);
 
@@ -26,3 +26,23 @@ contentPanel nie leży na JFrame ale gdzieś indziej -- w root pane czy coś
 
 nie chcę rozszerzania?
 nie dodawać do okna a do panelu
+
+
+
+
+
+
+jeśli ustawiam menu na ekran w constructorze to bez sensu jest render menu wywoływanie tam
+to poprawia czytelność jeżeli już w konstruktorze wykorzystuje render menu
+
+
+mogę spróbować ustawić jako domyślne pole
+
+
+
+
+
+
+
+
+

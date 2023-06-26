@@ -1,21 +1,20 @@
+package MyPackage;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class GameMenu extends JPanel {
 
-//    public static void main(String[] args) {
-//        JFrame test = new JFrame();
-//        test.add(new MenuPanel(null));
-//        test.pack();
-//        test.setLocationRelativeTo(null);
-//        test.setVisible(true);
-//    }
-    GameFrame gf;
-    GameMenu(GameFrame gf) {
-        this.gf = gf;
+
+class DifficultyDialog extends JDialog {
+    RectanglesFrame gf = (RectanglesFrame)getOwner();
+    public DifficultyDialog(Frame parent) {
+        super(parent);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
 
         JButton easyButton = new JButton("Easy");
         JButton mediumButton = new JButton("Medium");
@@ -61,11 +60,8 @@ public class GameMenu extends JPanel {
         });
 
         // Time slider
-        JSlider timeSlider = new JSlider(1, 120, 30);
+        JSlider timeSlider = new JSlider(15, 120, 30);
         timeSlider.setMajorTickSpacing(15);
-        //
-        timeSlider.setMinorTickSpacing(1);
-        //
         timeSlider.setPaintLabels(true);
         timeSlider.setPaintTicks(true);
         timeSlider.setSnapToTicks(true);
@@ -128,8 +124,11 @@ public class GameMenu extends JPanel {
         });
 
         playButton.addActionListener(e -> {
-            System.out.println("playButton - pressed");
-            gf.renderGame();
+
+
+            // jeśli nie ma ustawionego difficulty
+            // dodać listenery do sliderów i nie będzie problemu
+            dispose();
         });
 
 
@@ -137,7 +136,7 @@ public class GameMenu extends JPanel {
 
 
 
-        JPanel cp = new JPanel();
+        Container cp = getContentPane();
 
 
         JPanel diffButtons = new JPanel();
@@ -160,6 +159,9 @@ public class GameMenu extends JPanel {
 
 
 
+
+
+
         // PANEL Z PIONOWYMI SUWACZKAMI
         JPanel sliders = new JPanel(new GridLayout(1, 0));
         sliders.add(freqSlider);
@@ -169,8 +171,7 @@ public class GameMenu extends JPanel {
         cp.add(sliders, BorderLayout.CENTER);
         cp.add(playButton, BorderLayout.SOUTH);
 
-        add(cp);
 
-
+        pack();
     }
 }

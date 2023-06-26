@@ -1,3 +1,5 @@
+package MyPackage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ import java.util.Random;
 
 class GamePanel extends JPanel {
 
-    GameContent gc;
+    RectanglesContent rc;
     java.util.List<Rectangle> rectangles = new ArrayList<>();
     int killedCount = 0;
     int totalCount = 0;
@@ -20,8 +22,11 @@ class GamePanel extends JPanel {
     int elapsedTime = 0;
     boolean generatingRectangles = true;
 
-    GamePanel(GameContent gc) {
-        this.gc = gc;
+    GamePanel(RectanglesContent rc) {
+        this.rc = rc; // jest potrzebne, żeby widziały różne podklasy z własnym stackiem
+//        this.rc = (RectanglesContent) getParent(); nie zadziała bo zanim dodam do rodzica, muszę wyjść z konstruktora
+
+        
         setPreferredSize(new Dimension(400, 400));
         setSize(getPreferredSize());
         setBackground(Color.ORANGE);
@@ -31,13 +36,13 @@ class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 elapsedTime++;
-                if (elapsedTime == gc.gf.timeLimit) {
+                if (elapsedTime == rc.frame.timeLimit) {
                     timer.stop();
                     generatingRectangles = false;
                 }
             }
         });
-        clock = new Timer(gc.gf.speed, new RectangleMover());
+        clock = new Timer(rc.frame.speed, new RectangleMover());
         addMouseListener(new RectangleKiller());
         timer.start();
         clock.start();
@@ -48,7 +53,7 @@ class GamePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             // generate rectangles
             if (generatingRectangles) {
-                if (counter % gc.gf.frequency == 0) {
+                if (counter % rc.frame.frequency == 0) {
                     generateRectangle();
                     totalCount++;
                 }
@@ -61,10 +66,10 @@ class GamePanel extends JPanel {
         }
     }
     void generateRectangle() {
-        int x = new Random().nextInt(getWidth() - gc.gf.side + 1);
+        int x = new Random().nextInt(getWidth() - rc.frame.side + 1);
         int y = 0;
-        int width = gc.gf.side;
-        int height = gc.gf.side;
+        int width = rc.frame.side;
+        int height = rc.frame.side;
         Rectangle newRect = new Rectangle(x, y, width, height);
         rectangles.add(newRect);
     }
@@ -91,10 +96,10 @@ class GamePanel extends JPanel {
         updateLabels();
     }
     void updateLabels() {
-        gc.timeLabel.setText(
-                "Time left: " +  (gc.gf.timeLimit - elapsedTime) + "s"
+        rc.timeLabel.setText(
+                "Time left: " +  (rc.frame.timeLimit - elapsedTime) + "s"
         );
-        gc.scoreLabel.setText(
+        rc.scoreLabel.setText(
                 "Current score: " + percent.format(getScore()) + "\n" +
                         "Killed: " + killedCount + "\n" +
                         "Total: " + totalCount
@@ -122,7 +127,7 @@ class GamePanel extends JPanel {
     void endGame() {
         clock.stop();
 
-        String result = getScore() >= gc.gf.goal ? "You won!" : "You lost!";
+        String result = getScore() >= rc.frame.goal ? "You won!" : "You lost!";
         String score = percent.format(getScore());
         String message =  result + " Score: " + score;
 
@@ -131,7 +136,7 @@ class GamePanel extends JPanel {
         dialog.setLocationRelativeTo(getParent());
         dialog.setVisible(true);
 
-        ((GameContent)getParent()).enableReset();
+        ((RectanglesContent)getParent()).enableReset();
         getParent().revalidate();
     }
 }

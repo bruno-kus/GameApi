@@ -1,18 +1,28 @@
+package MyPackage;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
+public class RectangleSettingsScreen extends JPanel {
+
+//    public static void main(String[] args) {
+//        JFrame test = new JFrame();
+//        test.add(new MenuPanel(null));
+//        test.pack();
+//        test.setLocationRelativeTo(null);
+//        test.setVisible(true);
 
 
-class DifficultyDialog extends JDialog {
-    GameFrame gf = (GameFrame)getOwner();
-    public DifficultyDialog(Frame parent) {
-        super(parent);
-        setModalityType(ModalityType.APPLICATION_MODAL);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//    }
+    RectanglesFrame frame;
+    public RectangleSettingsScreen(AbstractGameFrame frame) {
 
+        RectanglesFrame rf = (RectanglesFrame) frame;
+        // catch wrong class exception!
+        this.frame = rf;
 
         JButton easyButton = new JButton("Easy");
         JButton mediumButton = new JButton("Medium");
@@ -32,9 +42,10 @@ class DifficultyDialog extends JDialog {
         freqSlider.setBorder(freqBorder);
 
         freqSlider.addChangeListener(new ChangeListener() {
+            // problem z dostępem wewnątrz słuchacza
             @Override
             public void stateChanged(ChangeEvent e) {
-                gf.frequency = freqSlider.getValue();
+                rf.frequency = freqSlider.getValue();
             }
         });
 
@@ -53,13 +64,16 @@ class DifficultyDialog extends JDialog {
         freqSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                gf.side = sizeSlider.getValue();
+                rf.side = sizeSlider.getValue();
             }
         });
 
         // Time slider
-        JSlider timeSlider = new JSlider(15, 120, 30);
+        JSlider timeSlider = new JSlider(1, 120, 30);
         timeSlider.setMajorTickSpacing(15);
+        //
+        timeSlider.setMinorTickSpacing(1);
+        //
         timeSlider.setPaintLabels(true);
         timeSlider.setPaintTicks(true);
         timeSlider.setSnapToTicks(true);
@@ -72,7 +86,7 @@ class DifficultyDialog extends JDialog {
         timeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                gf.timeLimit = timeSlider.getValue();
+                rf.timeLimit = timeSlider.getValue();
             }
         });
 
@@ -91,20 +105,21 @@ class DifficultyDialog extends JDialog {
         goalSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                gf.goal = (float) goalSlider.getValue() / 100;
+                rf.goal = (float) goalSlider.getValue() / 100;
             }
         });
 
         // Play button
         JButton playButton = new JButton("Play");
 
+        // menu button
+        JButton menuButton = new JButton("Back to menu");
 
 
 
 
 
-
-
+        // listeners
         easyButton.addActionListener(e -> {
             freqSlider.setValue(40);
             sizeSlider.setValue(75);
@@ -122,19 +137,18 @@ class DifficultyDialog extends JDialog {
         });
 
         playButton.addActionListener(e -> {
+//            System.out.println("playButton - pressed");
+            frame.renderGame();
+        });
 
-
-            // jeśli nie ma ustawionego difficulty
-            // dodać listenery do sliderów i nie będzie problemu
-            dispose();
+        menuButton.addActionListener(e -> {
+            frame.renderMenu();
         });
 
 
 
 
-
-
-        Container cp = getContentPane();
+        JPanel cp = new JPanel();
 
 
         JPanel diffButtons = new JPanel();
@@ -153,11 +167,11 @@ class DifficultyDialog extends JDialog {
         diffButtons.setBorder(chooseDiff);
 
         cp.setLayout(new BorderLayout());
-        cp.add(diffButtons, BorderLayout.NORTH);
 
-
-
-
+        // Panel south
+        JPanel southButtons = new JPanel(new GridLayout(0, 1));
+        southButtons.add(playButton);
+        southButtons.add(menuButton);
 
 
         // PANEL Z PIONOWYMI SUWACZKAMI
@@ -166,10 +180,14 @@ class DifficultyDialog extends JDialog {
         sliders.add(sizeSlider);
         sliders.add(timeSlider);
         sliders.add(goalSlider);
+
+        cp.add(diffButtons, BorderLayout.NORTH);
         cp.add(sliders, BorderLayout.CENTER);
-        cp.add(playButton, BorderLayout.SOUTH);
+        cp.add(southButtons, BorderLayout.SOUTH);
 
 
-        pack();
+        add(cp);
+
+
     }
 }

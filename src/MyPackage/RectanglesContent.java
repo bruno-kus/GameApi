@@ -1,18 +1,20 @@
+package MyPackage;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class GameContent extends JPanel {
+public class RectanglesContent extends JPanel {
 
-    GameFrame gf;
+    RectanglesFrame frame;
     JLabel timeLabel;
     JLabel scoreLabel;
     JPanel southPanel;
 
-    GameContent(GameFrame gf) {
-        this.gf = gf;
+    public RectanglesContent(AbstractGameFrame frame) {
+        this.frame = (RectanglesFrame) frame;
         setLayout(new BorderLayout());
 
         JPanel centerPanel = new GamePanel(this);
@@ -43,7 +45,7 @@ class GameContent extends JPanel {
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gf.renderGame();
+                frame.renderGame();
             }
         });
         JPanel playAgainPanel = new JPanel();
