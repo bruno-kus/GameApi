@@ -30,10 +30,6 @@ public abstract class AbstractFrame extends JFrame {
         this.imp = imp;
     }
 
-    public void renderFrame(AbstractPanel panel) {
-        // test test test render config try to
-    }
-
     public void renderMenu() {
         imp.impRenderMenu(this);
     }
