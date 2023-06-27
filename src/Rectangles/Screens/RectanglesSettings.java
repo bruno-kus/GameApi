@@ -1,4 +1,8 @@
-package MyPackage;
+package Rectangles.Screens;
+
+import Game.AbstractFrame;
+import Game.Screens.AbstractSettings;
+import Rectangles.RectanglesConfig;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -6,7 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class RectangleSettingsScreen extends JPanel {
+public class RectanglesSettings extends AbstractSettings {
 
 //    public static void main(String[] args) {
 //        JFrame test = new JFrame();
@@ -17,12 +21,15 @@ public class RectangleSettingsScreen extends JPanel {
 
 
 //    }
-    RectanglesFrame frame;
-    public RectangleSettingsScreen(AbstractGameFrame frame) {
+    RectanglesConfig config;
+    public RectanglesSettings(AbstractFrame frame) {
+        super(frame);
+        // jest potrzebny argument, bo przecież możemy renderować menu albo samą grę
+        // z poziomu tego ekranu
 
-        RectanglesFrame rf = (RectanglesFrame) frame;
-        // catch wrong class exception!
-        this.frame = rf;
+        config = (RectanglesConfig) frame.config;
+
+
 
         JButton easyButton = new JButton("Easy");
         JButton mediumButton = new JButton("Medium");
@@ -41,13 +48,8 @@ public class RectangleSettingsScreen extends JPanel {
         freqBorder.setTitleJustification(TitledBorder.CENTER);
         freqSlider.setBorder(freqBorder);
 
-        freqSlider.addChangeListener(new ChangeListener() {
-            // problem z dostępem wewnątrz słuchacza
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                rf.frequency = freqSlider.getValue();
-            }
-        });
+        // problem z dostępem wewnątrz słuchacza
+        freqSlider.addChangeListener(e -> config.frequency = freqSlider.getValue());
 
         // Size slider
         JSlider sizeSlider = new JSlider(25, 125, 50);
@@ -64,7 +66,7 @@ public class RectangleSettingsScreen extends JPanel {
         freqSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                rf.side = sizeSlider.getValue();
+                config.side = sizeSlider.getValue();
             }
         });
 
@@ -86,7 +88,7 @@ public class RectangleSettingsScreen extends JPanel {
         timeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                rf.timeLimit = timeSlider.getValue();
+                config.timeLimit = timeSlider.getValue();
             }
         });
 
@@ -105,7 +107,7 @@ public class RectangleSettingsScreen extends JPanel {
         goalSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                rf.goal = (float) goalSlider.getValue() / 100;
+                config.goal = (float) goalSlider.getValue() / 100;
             }
         });
 

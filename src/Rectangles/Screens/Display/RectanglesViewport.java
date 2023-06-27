@@ -1,4 +1,8 @@
-package MyPackage;
+package Rectangles.Screens.Display;
+
+
+import Game.AbstractConfig;
+import Rectangles.RectanglesConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +13,13 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
-class GamePanel extends JPanel {
+public class RectanglesViewport extends JPanel {
 
-    RectanglesContent rc;
-    java.util.List<Rectangle> rectangles = new ArrayList<>();
+    RectanglesDisplay display;
+    RectanglesConfig config;
+    List<Rectangle> rectangles = new ArrayList<>();
     int killedCount = 0;
     int totalCount = 0;
     Timer clock;
@@ -22,27 +28,28 @@ class GamePanel extends JPanel {
     int elapsedTime = 0;
     boolean generatingRectangles = true;
 
-    GamePanel(RectanglesContent rc) {
-        this.rc = rc; // jest potrzebne, żeby widziały różne podklasy z własnym stackiem
-//        this.rc = (RectanglesContent) getParent(); nie zadziała bo zanim dodam do rodzica, muszę wyjść z konstruktora
+    RectanglesViewport(RectanglesDisplay display, AbstractConfig config) {
+        // tylko w środku konstruktora musze otwarcie używać podkreślać, że mam na myśli this.config
+        // czy to czytelne rozwiązanie?
+
+        this.display = display;
+
+        this.config = (RectanglesConfig) config;
 
         
         setPreferredSize(new Dimension(400, 400));
         setSize(getPreferredSize());
         setBackground(Color.ORANGE);
 
-
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                elapsedTime++;
-                if (elapsedTime == rc.frame.timeLimit) {
-                    timer.stop();
-                    generatingRectangles = false;
-                }
+        timer = new Timer(1000, e -> {
+            elapsedTime++;
+            if (elapsedTime == this.config.timeLimit) {
+                timer.stop();
+                generatingRectangles = false;
             }
         });
-        clock = new Timer(rc.frame.speed, new RectangleMover());
+
+        clock = new Timer(this.config.speed, new RectangleMover());
         addMouseListener(new RectangleKiller());
         timer.start();
         clock.start();
@@ -53,7 +60,7 @@ class GamePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             // generate rectangles
             if (generatingRectangles) {
-                if (counter % rc.frame.frequency == 0) {
+                if (counter % config.frequency == 0) {
                     generateRectangle();
                     totalCount++;
                 }
@@ -66,10 +73,10 @@ class GamePanel extends JPanel {
         }
     }
     void generateRectangle() {
-        int x = new Random().nextInt(getWidth() - rc.frame.side + 1);
+        int x = new Random().nextInt(getWidth() - config.side + 1);
         int y = 0;
-        int width = rc.frame.side;
-        int height = rc.frame.side;
+        int width = config.side;
+        int height = config.side;
         Rectangle newRect = new Rectangle(x, y, width, height);
         rectangles.add(newRect);
     }
@@ -96,10 +103,10 @@ class GamePanel extends JPanel {
         updateLabels();
     }
     void updateLabels() {
-        rc.timeLabel.setText(
-                "Time left: " +  (rc.frame.timeLimit - elapsedTime) + "s"
+        display.timeLabel.setText(
+                "Time left: " +  (config.timeLimit - elapsedTime) + "s"
         );
-        rc.scoreLabel.setText(
+        display.scoreLabel.setText(
                 "Current score: " + percent.format(getScore()) + "\n" +
                         "Killed: " + killedCount + "\n" +
                         "Total: " + totalCount
@@ -127,7 +134,7 @@ class GamePanel extends JPanel {
     void endGame() {
         clock.stop();
 
-        String result = getScore() >= rc.frame.goal ? "You won!" : "You lost!";
+        String result = getScore() >= config.goal ? "You won!" : "You lost!";
         String score = percent.format(getScore());
         String message =  result + " Score: " + score;
 
@@ -136,7 +143,7 @@ class GamePanel extends JPanel {
         dialog.setLocationRelativeTo(getParent());
         dialog.setVisible(true);
 
-        ((RectanglesContent)getParent()).enableReset();
+        ((RectanglesDisplay)getParent()).enableReset();
         getParent().revalidate();
     }
 }

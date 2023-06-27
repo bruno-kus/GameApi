@@ -1,12 +1,14 @@
-package MyPackage;
+package Rectangles.Screens;
+
+import Game.AbstractFrame;
+import Game.Screens.AbstractMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GameMenu extends MyPanel {
-    public GameMenu(AbstractGameFrame frame) {
+
+public class RectanglesMenu extends AbstractMenu {
+    public RectanglesMenu(AbstractFrame frame) {
         super(frame);
         setLayout(new GridLayout(0, 1));
         setPreferredSize(new Dimension(400, 400));
@@ -25,19 +27,9 @@ public class GameMenu extends MyPanel {
         settingsButton.setFocusPainted(false);
 
         // listeners
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.renderGame();
-            }
-        });
+        playButton.addActionListener(e -> frame.renderGame());
 
-        settingsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.renderSettings();
-            }
-        });
+        settingsButton.addActionListener(e -> frame.renderSettings());
 
         add(playButton);
         add(settingsButton);

@@ -10,7 +10,7 @@ render menu
         //
 
 
-           MyPackage.DifficultyDialog difficultyDialog = new MyPackage.DifficultyDialog(this);
+           Game.DifficultyDialog difficultyDialog = new Game.DifficultyDialog(this);
                 difficultyDialog.setLocationRelativeTo(this);
                 difficultyDialog.setVisible(true);
 

@@ -1,4 +1,4 @@
-package MyPackage;
+package Game;
 
 public abstract class AbstractConfig {
 }

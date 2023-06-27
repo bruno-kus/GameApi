@@ -1,11 +1,11 @@
 package Windows;
 
-import MyPackage.AbstractGameFrame;
+import Game.AbstractFrame;
 
 public interface  WindowsImp {
-    public void impRenderMenu(AbstractGameFrame frame);
-    public void impRenderSettings(AbstractGameFrame frame);
-    public void impRenderGame(AbstractGameFrame frame);
+    public void impRenderMenu(AbstractFrame frame);
+    public void impRenderSettings(AbstractFrame frame);
+    public void impRenderGame(AbstractFrame frame);
 
 
 }

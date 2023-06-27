@@ -1,4 +1,8 @@
-package MyPackage;
+package Rectangles.Screens.Display;
+
+import Game.Screens.AbstractDisplay;
+import Game.AbstractFrame;
+import Rectangles.RectanglesFrame;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -6,18 +10,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RectanglesContent extends JPanel {
+public class RectanglesDisplay extends AbstractDisplay {
 
     RectanglesFrame frame;
-    JLabel timeLabel;
-    JLabel scoreLabel;
-    JPanel southPanel;
+    public JLabel timeLabel;
+    public JLabel scoreLabel;
+    public JPanel southPanel;
 
-    public RectanglesContent(AbstractGameFrame frame) {
+    public RectanglesDisplay(AbstractFrame frame) {
+        super(frame);
         this.frame = (RectanglesFrame) frame;
         setLayout(new BorderLayout());
 
-        JPanel centerPanel = new GamePanel(this);
+        JPanel centerPanel = new RectanglesViewport(this, frame.config);
         southPanel = new JPanel(new GridLayout(0, 1));
         JPanel labelsPanelContainer = new JPanel();
         JPanel labelsPanel = new JPanel();
@@ -40,7 +45,7 @@ public class RectanglesContent extends JPanel {
         labelsPanel.add(scoreLabel);
     }
 
-    void enableReset() {
+    public void enableReset() {
         JButton playAgainButton = new JButton("Play Again");
         playAgainButton.addActionListener(new ActionListener() {
             @Override

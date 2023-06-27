@@ -1,20 +1,20 @@
 package Windows;
 
-import MyPackage.AbstractGameFrame;
+import Game.AbstractFrame;
 
 public class DialogImp implements WindowsImp {
     @Override
-    public void impRenderMenu(AbstractGameFrame gf) {
+    public void impRenderMenu(AbstractFrame gf) {
 
     }
 
     @Override
-    public void impRenderSettings(AbstractGameFrame gf) {
+    public void impRenderSettings(AbstractFrame gf) {
 
     }
 
     @Override
-    public void impRenderGame(AbstractGameFrame gf) {
+    public void impRenderGame(AbstractFrame gf) {
 
     }
 }
