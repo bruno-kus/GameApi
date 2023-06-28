@@ -12,15 +12,11 @@ import java.awt.*;
 
 public class RectanglesSettings extends AbstractSettings {
 
-//    public static void main(String[] args) {
-//        JFrame test = new JFrame();
-//        test.add(new MenuPanel(null));
-//        test.pack();
-//        test.setLocationRelativeTo(null);
-//        test.setVisible(true);
+    JSlider frequencySlider;
+    JSlider sizeSlider;
+    // to jest chyba nudne i niepotrzebne i sztuczne, żeby uczyć się to robić
+    // no właśnie, chodzi stricte o stan umysłu i o problem solving
 
-
-//    }
     RectanglesConfig config;
     public RectanglesSettings(AbstractFrame frame) {
         super(frame);
