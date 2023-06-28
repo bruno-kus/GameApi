@@ -3,6 +3,7 @@ package Game;
 import Game.Screens.AbstractDisplay;
 import Game.Screens.AbstractMenu;
 import Game.Screens.AbstractSettings;
+import Utilities.Utilities;
 import Windows.WindowsImp;
 
 import javax.swing.*;
@@ -30,18 +31,17 @@ public abstract class AbstractFrame extends JFrame {
         this.imp = imp;
     }
 
-    public void renderFrame(AbstractPanel panel) {
-        // test test test render config try to
-    }
+    public void renderFrame(Class<? extends AbstractPanel> panelClass) {
 
-    public void renderMenu() {
-        imp.impRenderMenu(this);
-    }
+        AbstractPanel screen = Utilities.buildScreen(panelClass, this);
+        if (getContentPane().isAncestorOf(currentScreen)) {
+            getContentPane().remove(currentScreen);
+        }
+        currentScreen = screen;
 
-    public void renderGame() {
-        imp.impRenderGame(this);
-    }
-    public void renderSettings() {
-        imp.impRenderSettings(this);
+        getContentPane().add(currentScreen);
+
+        revalidate();
+        repaint();
     }
 }
