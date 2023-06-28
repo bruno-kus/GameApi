@@ -2,7 +2,7 @@ package Rectangles.Screens;
 
 import Game.AbstractFrame;
 import Game.Screens.AbstractSettings;
-import Rectangles.RectanglesConfig;
+import Rectangles.RectanglesProgramConfig;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -21,13 +21,13 @@ public class RectanglesSettings extends AbstractSettings {
 
 
 //    }
-    RectanglesConfig config;
+    RectanglesProgramConfig config;
     public RectanglesSettings(AbstractFrame frame) {
         super(frame);
         // jest potrzebny argument, bo przecież możemy renderować menu albo samą grę
         // z poziomu tego ekranu
 
-        config = (RectanglesConfig) frame.config;
+        config = (RectanglesProgramConfig) frame.config;
 
 
 
@@ -140,7 +140,7 @@ public class RectanglesSettings extends AbstractSettings {
 
         playButton.addActionListener(e -> {
 //            System.out.println("playButton - pressed");
-            frame.renderGame();
+            frame.renderDisplay();
         });
 
         menuButton.addActionListener(e -> {

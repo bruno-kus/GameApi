@@ -1,8 +1,8 @@
 package Rectangles.Screens.Display;
 
 
-import Game.AbstractConfig;
-import Rectangles.RectanglesConfig;
+import Game.AbstractProgramConfig;
+import Rectangles.RectanglesProgramConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.util.List;
 public class RectanglesViewport extends JPanel {
 
     RectanglesDisplay display;
-    RectanglesConfig config;
+    RectanglesProgramConfig config;
     List<Rectangle> rectangles = new ArrayList<>();
     int killedCount = 0;
     int totalCount = 0;
@@ -28,13 +28,13 @@ public class RectanglesViewport extends JPanel {
     int elapsedTime = 0;
     boolean generatingRectangles = true;
 
-    RectanglesViewport(RectanglesDisplay display, AbstractConfig config) {
+    RectanglesViewport(RectanglesDisplay display, AbstractProgramConfig config) {
         // tylko w środku konstruktora musze otwarcie używać podkreślać, że mam na myśli this.config
         // czy to czytelne rozwiązanie?
 
         this.display = display;
 
-        this.config = (RectanglesConfig) config;
+        this.config = (RectanglesProgramConfig) config;
 
         
         setPreferredSize(new Dimension(400, 400));

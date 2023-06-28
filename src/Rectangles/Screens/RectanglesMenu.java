@@ -27,7 +27,7 @@ public class RectanglesMenu extends AbstractMenu {
         settingsButton.setFocusPainted(false);
 
         // listeners
-        playButton.addActionListener(e -> frame.renderGame());
+        playButton.addActionListener(e -> frame.renderDisplay());
 
         settingsButton.addActionListener(e -> frame.renderSettings());
 

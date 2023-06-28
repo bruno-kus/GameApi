@@ -1,8 +1,8 @@
 package Rectangles;
 
-import Game.AbstractConfig;
+import Game.AbstractProgramConfig;
 
-public class RectanglesConfig extends AbstractConfig {
+public class RectanglesProgramConfig extends AbstractProgramConfig {
     public int timeLimit = 30;
     public double goal = 0.5;
     public int speed = 10;

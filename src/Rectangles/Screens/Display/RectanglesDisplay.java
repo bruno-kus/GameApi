@@ -50,7 +50,7 @@ public class RectanglesDisplay extends AbstractDisplay {
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.renderGame();
+                frame.renderDisplay();
             }
         });
         JPanel playAgainPanel = new JPanel();
